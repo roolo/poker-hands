@@ -18,15 +18,6 @@ class Hand
   # @return [Array(Symbol,Integer)] Word ranking and supplementary ranking for
   #   case of match
   def rank
-    # @todo This is not solution for when the cards are not sorted on input
-    is_consecutive_values = @values.map{|val|
-      PokerHands::VALUES.index(val)
-    }.sort == @values.map{|val|
-      PokerHands::VALUES.index(val)
-    }
-    same_four_val = @values.detect{|val| @values.count(val) >= 4 }
-    same_three_val = @values.detect{|val| @values.count(val) >= 3 }
-
     if @suits.uniq.count == 1
       if is_consecutive_values
         ranking = [:straight_flush, 0]
@@ -44,7 +35,32 @@ class Hand
     ranking
   end
 
+  # Determines if hand has consecutive values
+  #
+  # @todo This is not solution for when the cards are not sorted on input
+  #
+  # @return [TrueClass]
+  def is_consecutive_values
+    @values.map { |val|
+      PokerHands::VALUES.index(val)
+    }.sort == @values.map { |val|
+      PokerHands::VALUES.index(val)
+    }
+  end
+
+  # @return [String]
+  def same_three_val
+    @values.detect{|val| @values.count(val) >= 3 }
+  end
+
+  # @return [String]
+  def same_four_val
+    @values.detect{|val| @values.count(val) >= 4 }
+  end
+
   # Detects higher value in hand
+  #
+  # @return [String] Higher value by poker rules
   def highest_value
     PokerHands::VALUES[@values.inject(0){|highest_index, val|
       value_poker_index = PokerHands::VALUES.index(val)
