@@ -18,7 +18,13 @@ describe Hand do
     it 'recognize Four of a kind' do
       hand = Hand.new '9C 9D 9H 9S KC'
 
-      hand.rank.should eq [:four_or_kind, '9']
+      hand.rank.should eq [:four_of_kind, '9']
+    end
+
+    it 'recognize Full House' do
+      hand = Hand.new '8C 8D 8H KS KC'
+
+      hand.rank.should eq [:full_house, '8']
     end
   end
 end
