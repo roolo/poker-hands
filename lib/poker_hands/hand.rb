@@ -27,8 +27,12 @@ class Hand
     same_four_val = @values.detect{|val| @values.count(val) >= 4 }
     same_three_val = @values.detect{|val| @values.count(val) >= 3 }
 
-    if @suits.uniq.count == 1 && is_consecutive_values
-      ranking = [:straight_flush, 0]
+    if @suits.uniq.count == 1
+      if is_consecutive_values
+        ranking = [:straight_flush, 0]
+      else
+        ranking = [:flush, highest_value]
+      end
     elsif @values.uniq.count <= @values.count-3
       if same_four_val
         ranking = [:four_of_kind, same_four_val]
@@ -38,5 +42,17 @@ class Hand
     end
 
     ranking
+  end
+
+  # Detects higher value in hand
+  def highest_value
+    PokerHands::VALUES[@values.inject(0){|highest_index, val|
+      value_poker_index = PokerHands::VALUES.index(val)
+      if value_poker_index > highest_index
+        value_poker_index
+      else
+        highest_index
+      end
+    }]
   end
 end

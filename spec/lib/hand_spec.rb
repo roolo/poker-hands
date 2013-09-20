@@ -26,5 +26,11 @@ describe Hand do
 
       hand.rank.should eq [:full_house, '8']
     end
+
+    it 'recognize Flush' do
+      hand = Hand.new '7C 5C 4C JC KC'
+
+      hand.rank.should eq [:flush, 'K']
+    end
   end
 end
