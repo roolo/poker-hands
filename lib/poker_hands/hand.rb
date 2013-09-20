@@ -32,6 +32,8 @@ class Hand
       end
     elsif is_consecutive_values
       ranking = [:straight, highest_value]
+    elsif same_three_val
+      ranking = [:three_of_kind, same_three_val]
     end
 
     ranking
@@ -47,7 +49,7 @@ class Hand
       PokerHands::VALUES.index(val)
     }.sort == @values.map { |val|
       PokerHands::VALUES.index(val)
-    }
+    } && @values.uniq.count >= 5
   end
 
   # @return [String]
