@@ -32,5 +32,10 @@ describe Hand do
 
       hand.rank.should eq [:flush, 'K']
     end
+    it 'recognize Straight' do
+      hand = Hand.new '8C 9D TC JH QC'
+
+      hand.rank.should eq [:straight, 'Q']
+    end
   end
 end

@@ -30,6 +30,8 @@ class Hand
       elsif same_three_val
         ranking = [:full_house, same_three_val]
       end
+    elsif is_consecutive_values
+      ranking = [:straight, highest_value]
     end
 
     ranking
